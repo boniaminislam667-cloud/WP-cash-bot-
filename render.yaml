@@ -1,12 +1,19 @@
 services:
   - type: web
-    name: wpcashbot
-    env: python
+    name: wp-cashbot
+    runtime: python
+    plan: free
     buildCommand: pip install -r requirements.txt
     startCommand: python main.py
+    healthCheckPath: /
     envVars:
-      - key: BOT_TOKEN
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: BOT_TOKEN        # from @BotFather (set in Render dashboard, never in code)
         sync: false
-      - key: ADMIN_ID
+      - key: ADMIN_ID         # your numeric Telegram ID (get it from @userinfobot)
         sync: false
-    plan: free
+      - key: BOT_USERNAME     # bot username, with or without @
+        sync: false
+      - key: DB_PATH          # SQLite file path
+        value: wpcash.db
